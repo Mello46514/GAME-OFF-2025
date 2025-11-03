@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://c67mw3nkqryc5"]
+
+[ext_resource type="Script" uid="uid://dheqesb8lderx" path="res://Scenes/Scripts/hook.gd" id="1_bm4m1"]
+[ext_resource type="Script" uid="uid://bbuqdopev6hvr" path="res://addons/LineRenderer/line_renderer.gd" id="2_5ts8p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ldsl7"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ldsl7"]
+material = SubResource("StandardMaterial3D_ldsl7")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="Curve" id="Curve_pwo4a"]
+_data = [Vector2(0.13372093, 0.9101124), 0.0, 0.0, 0, 0, Vector2(0.43023258, 0.77528095), -0.80131537, -0.80131537, 0, 0, Vector2(0.9825582, 0), -2.705618, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bm4m1"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ldsl7"]
+radius = 0.215
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_kbcxn"]
+
+[node name="Hook" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_bm4m1")
+
+[node name="Particles" type="CPUParticles3D" parent="."]
+amount = 64
+lifetime = 3.0
+preprocess = 10.0
+speed_scale = 1.6
+fixed_fps = 30
+mesh = SubResource("SphereMesh_ldsl7")
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("Curve_pwo4a")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+radius = 0.21
+material = SubResource("StandardMaterial3D_bm4m1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ldsl7")
+
+[node name="Line" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_kbcxn")
+script = ExtResource("2_5ts8p")
+metadata/_custom_type_script = "uid://bbuqdopev6hvr"

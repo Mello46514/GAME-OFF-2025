@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://br8cg17yajasl"]
+
+[ext_resource type="Script" uid="uid://diado8a3fcekb" path="res://Scenes/Scripts/enemy.gd" id="1_bbch7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_foupm"]
+radius = 1.1772461
+height = 5.7452583
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foupm"]
+albedo_color = Color(0, 0.48235294, 0.2901961, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_foupm"]
+material = SubResource("StandardMaterial3D_foupm")
+size = Vector3(5.155, 0.735, 2.255)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_foupm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pd4n8"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pd4n8"]
+material = SubResource("StandardMaterial3D_pd4n8")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xi8g3"]
+
+[node name="Player" type="CharacterBody3D" groups=["Enemy"]]
+script = ExtResource("1_bbch7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, -1, 1, -4.371139e-08, 0, -4.371139e-08, -1, -4.371139e-08, -0.007820139, 0.80205977, 0.21051979)
+shape = SubResource("CapsuleShape3D_foupm")
+
+[node name="Boat" type="Node3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Boat" type="MeshInstance3D" parent="Boat"]
+mesh = SubResource("BoxMesh_foupm")
+skeleton = NodePath("../..")
+
+[node name="TestPlayer" type="MeshInstance3D" parent="Boat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7965987, 1, 0)
+mesh = SubResource("CapsuleMesh_foupm")
+skeleton = NodePath("../..")
+
+[node name="Motor" type="MeshInstance3D" parent="Boat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.610818, 0.22538555, 0)
+mesh = SubResource("BoxMesh_pd4n8")
+
+[node name="Hitbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.9883287, -0.19746399)
+shape = SubResource("CapsuleShape3D_xi8g3")
+debug_color = Color(0.98159295, 0, 0.3738016, 0.41960785)

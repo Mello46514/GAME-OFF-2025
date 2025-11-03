@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=3 uid="uid://ccf1rkqj5om3u"]
+
+[ext_resource type="PackedScene" uid="uid://bl2sfqsli6s3s" path="res://Scenes/Common/Player.tscn" id="1_o4yap"]
+[ext_resource type="PackedScene" uid="uid://br8cg17yajasl" path="res://Scenes/Common/Enemy.tscn" id="2_uotso"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_u44n3"]
+sky_material = SubResource("ProceduralSkyMaterial_xkndl")
+
+[sub_resource type="Environment" id="Environment_sb48q"]
+background_mode = 2
+sky = SubResource("Sky_u44n3")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.63134027, 0.8103066, 0.97289616, 1)
+fog_density = 0.0403
+fog_sky_affect = 0.82
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6ubv3"]
+noise_type = 3
+frequency = 0.0617
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wbfu4"]
+noise = SubResource("FastNoiseLite_6ubv3")
+seamless = true
+as_normal_map = true
+seamless_blend_skirt = 1.0
+bump_strength = 5.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ubv3"]
+albedo_color = Color(0.26666668, 0.5686275, 1, 1)
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_wbfu4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6ubv3"]
+material = SubResource("StandardMaterial3D_6ubv3")
+size = Vector2(2000, 2000)
+
+[sub_resource type="Animation" id="Animation_wbfu4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:normal_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_6ubv3"]
+resource_name = "Water"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:normal_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 2.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xkndl"]
+_data = {
+&"RESET": SubResource("Animation_wbfu4"),
+&"Water": SubResource("Animation_6ubv3")
+}
+
+[node name="Game" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sb48q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_6ubv3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Water"]
+libraries = {
+&"": SubResource("AnimationLibrary_xkndl")
+}
+autoplay = "Water"
+
+[node name="Player" parent="." instance=ExtResource("1_o4yap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6437135, 0, -2.5529175)
+
+[node name="Player2" parent="." instance=ExtResource("2_uotso")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.13298, 0, -17.543604)
