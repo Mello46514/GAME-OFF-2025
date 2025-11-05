@@ -21,7 +21,7 @@ albedo_color = Color(1, 0, 1, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_ldsl7"]
 radius = 0.215
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_kbcxn"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_5ts8p"]
 
 [node name="Hook" type="CharacterBody3D"]
 collision_layer = 2
@@ -46,6 +46,6 @@ material = SubResource("StandardMaterial3D_bm4m1")
 shape = SubResource("SphereShape3D_ldsl7")
 
 [node name="Line" type="MeshInstance3D" parent="."]
-mesh = SubResource("ImmediateMesh_kbcxn")
+mesh = SubResource("ImmediateMesh_5ts8p")
 script = ExtResource("2_5ts8p")
 metadata/_custom_type_script = "uid://bbuqdopev6hvr"

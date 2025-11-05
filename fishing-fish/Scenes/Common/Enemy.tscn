@@ -46,7 +46,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.610818, 0.22538555, 0)
 mesh = SubResource("BoxMesh_pd4n8")
 
-[node name="Hitbox" type="Area3D" parent="."]
+[node name="Hitbox" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
 collision_layer = 2
 collision_mask = 2
